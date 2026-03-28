@@ -966,28 +966,19 @@ function initQR() {
   const qrBtn = document.getElementById('qr-btn');
   const modal = document.getElementById('qr-modal');
   const closeBtn = document.getElementById('qr-modal-close');
-  const canvas = document.getElementById('qr-canvas');
+  const imgEl = document.getElementById('qr-image');
   const urlEl = document.getElementById('qr-url');
 
-  qrBtn.addEventListener('click', async () => {
-    const url = window.location.href.split('?')[0]; // 取乾淨 URL
+  // 靜態 QR 圖片，直接用本地 assets/qr-program.png
+  if (imgEl) {
+    imgEl.src = 'assets/qr-program.png';
+    imgEl.style.width = '160px';
+    imgEl.style.height = '160px';
+  }
+
+  qrBtn.addEventListener('click', () => {
+    const url = window.location.href.split('?')[0];
     urlEl.textContent = url;
-
-    // 生成 QR Code
-    try {
-      canvas.getContext('2d').clearRect(0, 0, 160, 160);
-      await QRCode.toCanvas(canvas, url, {
-        width: 160,
-        margin: 0,
-        color: {
-          dark: '#1e1a24',
-          light: '#ffffff'
-        }
-      });
-    } catch (err) {
-      console.warn('QR generation failed:', err);
-    }
-
     modal.classList.add('open');
   });
 
