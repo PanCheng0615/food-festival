@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>美食節 · 啟航 1331</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       Header
+  ═══════════════════════════════════════════════════════════ -->
+  <header class="app-header">
+    <div class="header-brand">
+      <div class="brand-name" id="brand-name">美食節</div>
+      <div class="brand-sub" id="brand-sub">啟航 1331 · Kai Tak</div>
+    </div>
+    <div class="header-actions">
+      <div class="lang-switch">
+        <button class="lang-btn active" data-lang="zh" id="lang-zh">中</button>
+        <button class="lang-btn" data-lang="en" id="lang-en">EN</button>
+      </div>
+      <button class="qr-btn" id="qr-btn" title="QR Code">⊞</button>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       公告跑馬燈
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="notice-bar" id="notice-bar">
+    <span class="notice-icon">★</span>
+    <span class="notice-text" id="notice-text"></span>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       主內容區
+  ═══════════════════════════════════════════════════════════ -->
+  <main class="app-main">
+
+    <!-- ─── 地圖頁 ─── -->
+    <section class="page active" id="page-map">
+      <h2 class="page-title" id="map-page-title">場地地圖</h2>
+
+      <!-- 交通入口 -->
+      <button class="map-transport-btn" id="go-transport">
+        <span>🚇</span>
+        <span id="transport-btn-text">交通指引</span>
+      </button>
+
+      <!-- 數字地圖視窗（參考專業手繪導覽 UI） -->
+      <div class="map-window">
+        <div class="map-window-titlebar">
+          <div class="map-window-dots" aria-hidden="true">
+            <span class="win-dot win-dot--red"></span>
+            <span class="win-dot win-dot--amber"></span>
+            <span class="win-dot win-dot--green"></span>
+          </div>
+          <div class="map-window-title" id="map-window-title">啟航 1331 · 數字地圖</div>
+          <div class="map-window-meta" id="map-window-meta"></div>
+        </div>
+        <div class="map-window-body">
+          <div class="map-viewport" id="map-container">
+            <div class="map-float-tools">
+              <button type="button" class="map-tool-btn" id="map-tool-zones" title="圖例">◎</button>
+              <span class="map-tool-compass">N</span>
+            </div>
+            <div class="map-search-float">
+              <span class="map-search-ico" aria-hidden="true">🔍</span>
+              <input type="search" id="map-quick-search" placeholder="搜尋攤位或地點…" enterkeyhint="search" autocomplete="off">
+            </div>
+            <button type="button" class="map-fab" id="map-fab-nav" title="開啟導航">📍</button>
+            <svg class="illustration-map" id="pixel-map" viewBox="0 0 320 200" preserveAspectRatio="xMidYMid meet" aria-label="Venue map"></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- 圖例 -->
+      <div class="map-legend" id="map-legend">
+        <div class="legend-item"><div class="legend-pin legend-pin--a" aria-hidden="true"></div><span>A 區</span></div>
+        <div class="legend-item"><div class="legend-pin legend-pin--b" aria-hidden="true"></div><span>B 區</span></div>
+      </div>
+
+      <p class="map-hint" id="map-hint">▶ 點擊區域標記前往該區攤位</p>
+    </section>
+
+    <!-- ─── 攤位頁 ─── -->
+    <section class="page" id="page-stalls">
+      <h2 class="page-title" id="stalls-page-title">美食攤位</h2>
+
+      <!-- 搜尋框 -->
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="stall-search" placeholder="搜尋攤位... Search...">
+      </div>
+
+      <!-- 分類篩選 -->
+      <div class="filter-bar" id="filter-bar">
+        <button class="filter-chip active" data-filter="all" id="filter-all">全部 ALL</button>
+        <button class="filter-chip" data-filter="food" id="filter-food">🍜 美食</button>
+        <button class="filter-chip" data-filter="drink" id="filter-drink">🥤 飲品</button>
+        <button class="filter-chip" data-filter="facility" id="filter-facility">🏪 設施</button>
+        <button class="filter-chip" data-filter="coming" id="filter-coming">⏳ 即將</button>
+      </div>
+
+      <!-- 攤位網格 -->
+      <div class="stall-grid" id="stall-grid">
+        <!-- JS 動態生成 -->
+      </div>
+    </section>
+
+    <!-- ─── 節目頁 ─── -->
+    <section class="page" id="page-events">
+      <h2 class="page-title" id="events-page-title">節目表</h2>
+
+      <!-- 日期標籤 -->
+      <div class="date-tabs" id="date-tabs">
+        <!-- JS 動態生成 -->
+      </div>
+
+      <!-- 活動列表 -->
+      <div id="event-list">
+        <!-- JS 動態生成 -->
+      </div>
+    </section>
+
+    <!-- ─── 交通頁 ─── -->
+    <section class="page" id="page-transport">
+      <h2 class="page-title" id="transport-page-title">交通指引</h2>
+
+      <div class="transport-list" id="transport-list">
+        <!-- JS 動態生成 -->
+      </div>
+
+      <!-- 地圖連結 -->
+      <div class="mt-16">
+        <p class="mb-8 transport-map-label" id="transport-external-label">外部地圖 · EXTERNAL MAP</p>
+        <div class="transport-links" id="map-links">
+          <button class="px-icon-btn" onclick="window.open(VENUE.maps.google, '_blank')">
+            🌐 Google Maps
+          </button>
+          <button class="px-icon-btn" onclick="window.open(VENUE.maps.apple, '_blank')">
+            🍎 Apple Maps
+          </button>
+          <button class="px-icon-btn" onclick="window.open(VENUE.maps.waze, '_blank')">
+            🚗 Waze
+          </button>
+        </div>
+      </div>
+
+      <!-- 返回按鈕 -->
+      <div class="mt-16 text-center">
+        <button class="px-btn" id="back-to-map">← 返回地圖</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       底部導航
+  ═══════════════════════════════════════════════════════════ -->
+  <nav class="app-nav">
+    <button class="nav-item active" data-page="map">
+      <span class="nav-icon">🗺️</span>
+      <span class="nav-label" id="nav-map">地圖</span>
+    </button>
+    <button class="nav-item" data-page="stalls">
+      <span class="nav-icon">🍜</span>
+      <span class="nav-label" id="nav-stalls">攤位</span>
+    </button>
+    <button class="nav-item" data-page="events">
+      <span class="nav-icon">🎤</span>
+      <span class="nav-label" id="nav-events">節目</span>
+    </button>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       底部滑出面板
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="panel-overlay" id="panel-overlay"></div>
+  <div class="detail-panel" id="detail-panel">
+    <div class="panel-handle"></div>
+    <button class="panel-close" id="panel-close">✕</button>
+    <div class="panel-header">
+      <div class="panel-status-row">
+        <span class="panel-id" id="panel-id"></span>
+        <span class="stall-status open" id="panel-status"></span>
+      </div>
+      <div class="panel-name" id="panel-name"></div>
+      <div class="panel-meta">
+        <span class="zone-tag" id="panel-zone"></span>
+        <span id="panel-category"></span>
+      </div>
+    </div>
+    <div class="panel-content">
+      <p class="panel-desc" id="panel-desc"></p>
+      <div class="panel-tags" id="panel-tags"></div>
+      <div class="panel-actions" id="panel-actions"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       QR Code 彈窗
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="qr-modal" id="qr-modal">
+    <div class="qr-box">
+      <div class="qr-title" id="qr-title">掃碼分享</div>
+      <canvas id="qr-canvas" class="qr-canvas" width="160" height="160"></canvas>
+      <div class="qr-url" id="qr-url"></div>
+      <button class="qr-modal-close" id="qr-modal-close">關閉 CLOSE</button>
+    </div>
+  </div>
+
+  <!-- QRCode.js (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <!-- 主程式 -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
